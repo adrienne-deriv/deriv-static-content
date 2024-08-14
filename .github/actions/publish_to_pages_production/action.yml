@@ -16,6 +16,6 @@ runs:
     run: |-
       cd public
       npm i wrangler@3.1.0
-      npx wrangler pages deploy . --project-name=adrienne-deriv-static-content-pages --branch=main
+      npx wrangler pages deploy . --project-name=adrienne-deriv-static-content --branch=main
       echo "New website - REDACTED-pages-deriv-static-content.deriv.com"
     shell: bash
