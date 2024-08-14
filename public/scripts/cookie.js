@@ -1,13 +1,13 @@
 /* utility functions */
 const getDomain = () => {
-  const domain = location.hostname;
-  const allowed_domains = ["deriv.com" , "binary.sx"];
+  const host_domain = location.hostname;
+  const allowed_domains = ["deriv.com", "binary.sx"];
 
-  if (allowed_domains.includes(domain) && domain.includes("deriv.com")) {
-    return "deriv.com";
-  }
+  const matched_domain = allowed_domains.find((allowed_domain) =>
+    host_domain.includes(allowed_domain)
+  );
 
-  return ( allowed_domains.includes(domain) && domain.includes("binary.sx")) ? "binary.sx" : domain;
+  return matched_domain ?? domain;
 };
 
 const eraseCookie = (name) => {
@@ -148,6 +148,13 @@ const shouldOverwrite = (new_utm_data, current_utm_data) => {
     eraseCookie("affiliate_tracking");
     document.cookie = `affiliate_tracking=${searchParams.get(
       "t"
+    )}; expires=Tue, 19 Jan 9999 03:14:07 UTC;  domain=${getDomain()}; path=/; SameSite=None; Secure;`;
+  }
+  /* start handling affiliate tracking */
+  if (searchParams.has("sidc")) {
+    eraseCookie("affiliate_tracking");
+    document.cookie = `affiliate_tracking=${searchParams.get(
+      "sidc"
     )}; expires=Tue, 19 Jan 9999 03:14:07 UTC;  domain=${getDomain()}; path=/; SameSite=None; Secure;`;
   }
   /* end handling affiliate tracking */
